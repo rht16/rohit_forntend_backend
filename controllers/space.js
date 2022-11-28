@@ -39,7 +39,7 @@ router.get("/get-all-capsules-count", isAuthenticatedUser, async (req, res) => {
 router.post("/get-filtered-capsules", isAuthenticatedUser, async (req, res) => {
   const { selectedStatus, skip, selectedType, selectedDate } = req.body;
   try {
-    let modifiedApi = process.env.API;
+    let modifiedApi = process.env.API + `?limit=${9}&offset=${3}`;
     if (selectedStatus && selectedType) {
         modifiedApi =
         process.env.API +
@@ -47,17 +47,17 @@ router.post("/get-filtered-capsules", isAuthenticatedUser, async (req, res) => {
     } else if (selectedStatus) {
       modifiedApi =
         process.env.API +
-        `?status=${selectedStatus}`;
+        `?limit=${9}&offset=${3}&status=${selectedStatus}`;
     } else if (selectedType) {
       modifiedApi =
         process.env.API +
-        `?type=${selectedType}`;
+        `?limit=${9}&offset=${3}&type=${selectedType}`;
     } else if (selectedDate) {
       modifiedApi =
       process.env.API +
       `?original_launch=${selectedDate}`;
     }
-  
+  console.log(modifiedApi);
     fetch(modifiedApi)
       .then((response) => response.json())
       .then((data) => {
